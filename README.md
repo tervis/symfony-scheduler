@@ -1,4 +1,4 @@
-# Scheduler
+# Symfony Scheduler (DRAFT)
 
 Designed to run only one command with cron at every minute
 
