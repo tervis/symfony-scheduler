@@ -4,14 +4,25 @@ declare(strict_types=1);
 namespace App\Scheduler;
 
 /**
- * All task should implement TaskInterface to get automatic tagging
+ * All task should implement TaskMessageInterface to get automatic tagging
  * Tasks will be grouped by a tag app.scheduled_task
  *
- * Interface TaskInterface
+ * Interface TaskMessageInterface
  * @package App\Scheduler
  */
-interface TaskInterface
+interface TaskMessageInterface
 {
+    /**
+     * @param int $id Schedule entity id
+     * @return $this
+     */
+    public function setTask(int $id): self;
+
+    /**
+     * @return int Schedule entity id
+     */
+    public function getTask(): int;
+
     /**
      * Returns the task name ie. short class name
      *
@@ -32,12 +43,5 @@ interface TaskInterface
      * @return string
      */
     public function getDescription(): string;
-
-    /**
-     * Execute the task
-     *
-     * @return mixed
-     */
-    public function run();
 
 }

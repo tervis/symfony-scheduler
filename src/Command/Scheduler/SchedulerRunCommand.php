@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 /**
  * Run scheduled tasks
@@ -33,17 +34,24 @@ class SchedulerRunCommand extends Command implements LoggerAwareInterface
     /**
      * @var ScheduleManager
      */
-    private ScheduleManager $scheduleManager;
+    private $scheduleManager;
+
+    /**
+     * @var MessageBusInterface
+     */
+    private $bus;
 
     /**
      * SchedulerRunCommand constructor.
      * @param ScheduleManager $scheduleManager
+     * @param MessageBusInterface $bus
      * @param string|null $name
      */
-    public function __construct(ScheduleManager $scheduleManager, string $name = null)
+    public function __construct(ScheduleManager $scheduleManager, MessageBusInterface $bus, string $name = null)
     {
         parent::__construct($name);
         $this->scheduleManager = $scheduleManager;
+        $this->bus = $bus;
     }
 
     protected function configure(): void
@@ -105,8 +113,9 @@ class SchedulerRunCommand extends Command implements LoggerAwareInterface
         foreach ($taskList as $task) {
             if ($name === $task->getClassName()) {
                 try {
-                    $task->getClass()->run();
-                    $this->scheduleManager->setTaskExecutedAt($schedule);
+                    $message = $task->getClass();
+                    $message->setTask($schedule->getId());
+                    $this->bus->dispatch($message);
                 } catch (\Throwable $e) {
                     $this->logger->error(__METHOD__, ['error' => $e->getMessage()]);
                 }

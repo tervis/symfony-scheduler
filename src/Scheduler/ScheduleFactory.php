@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Scheduler;
 
 
-use App\Dto\Scheduler\TaskDto;
 use App\Entity\Schedule;
 
 /**
@@ -14,22 +13,22 @@ use App\Entity\Schedule;
 class ScheduleFactory
 {
     /**
-     * Scheduler new task to queue
+     * Schedule a new task to queue
      * Task name is same as class name
      *
-     * @param TaskDto $taskDto
+     * @param Task $task
      * @return Schedule
      */
-    public static function create(TaskDto $taskDto): Schedule
+    public static function create(Task $task): Schedule
     {
         $schedule = (new Schedule())
-            ->setTaskName($taskDto->getTaskName())
-            ->setQueueName($taskDto->getQueueName())
-            ->setDescription($taskDto->getDescription())
-            ->setScheduledAt($taskDto->getScheduledAt());
+            ->setTaskName($task->getTaskName())
+            ->setQueueName($task->getQueueName())
+            ->setDescription($task->getDescription())
+            ->setScheduledAt($task->getScheduledAt());
 
-        if (!empty($taskDto->getContext())) {
-            foreach ($taskDto->getContext() as $key => $value) {
+        if (!empty($task->getContext())) {
+            foreach ($task->getContext() as $key => $value) {
                 $schedule->setContext($key, $value);
             }
         }

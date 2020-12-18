@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Dto\Scheduler;
+namespace App\Scheduler;
 
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class TaskDto
  * @package App\Dto\Scheduler
  */
-class TaskDto
+class Task
 {
     /**
      * Task name is same as Task class name
