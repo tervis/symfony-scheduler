@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Scheduler;
 
-use App\Dto\Scheduler\TaskDto;
+use App\Scheduler\Task;
 use App\Scheduler\ScheduleFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -17,9 +17,9 @@ class ScheduleFactoryTest extends TestCase
     /**
      * @test
      * @dataProvider scheduleTaskProvider
-     * @param TaskDto $task
+     * @param Task $task
      */
-    public function canCreateSchedule(TaskDto $task): void
+    public function canCreateSchedule(Task $task): void
     {
 
         $schedule = ScheduleFactory::create($task);
@@ -41,13 +41,13 @@ class ScheduleFactoryTest extends TestCase
         $date = new \Datetime();
 
         return [
-            [(new TaskDto())
-                ->setTaskName('SampleTask')
+            [(new Task())
+                ->setTaskName('SampleTaskMessage')
                 ->setQueueName('default')
                 ->setDescription('sample text here')
                 ->setScheduledAt($date)],
-            [(new TaskDto())
-                ->setTaskName('SampleTask')
+            [(new Task())
+                ->setTaskName('SampleTaskMessage')
                 ->setQueueName('default')
                 ->setDescription('sample text here')
                 ->setScheduledAt($date)

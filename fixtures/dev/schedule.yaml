@@ -1,6 +1,6 @@
 App\Entity\Schedule:
   schedule_1:
-    taskName: 'SampleTask'
+    taskName: 'SampleTaskMessage'
     queueName: 'default'
     description: <sentence()>
     scheduledAt: <dateTimeBetween('-1 hours')>

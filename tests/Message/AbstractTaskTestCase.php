@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Message;
 
 
-use App\Scheduler\TaskHandlerInterface;
+use App\Scheduler\TaskMessageInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,11 +27,20 @@ class AbstractTaskTestCase extends TestCase
     /**
      * @test
      */
+    public function setTaskWorks(): void
+    {
+        $this->task->setTask(1);
+        self::assertEquals(1, $this->task->getTask());
+    }
+
+    /**
+     * @test
+     */
     public function getClassWorks(): void
     {
         $class = $this->task->getClass();
 
-        self::assertInstanceOf(TaskHandlerInterface::class, $class);
+        self::assertInstanceOf(TaskMessageInterface::class, $class);
     }
 
     /**

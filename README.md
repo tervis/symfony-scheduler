@@ -19,12 +19,12 @@ Cron entry
 Command will execute tasks listed in Schedule-table by queueName and scheduledAt <= now
 
 
-All Task tagged with app.schedule_task will get listed in SchedulerService
+All Task tagged with app.schedule_task will get listed in SchedulerManager
 ```yaml
 services:
     _instanceof:
-        # services whose classes are instances of TaskInterface will be tagged automatically
-        App\Scheduler\TaskInterface:
+        # services whose classes are instances of TaskMessageInterface will be tagged automatically
+        App\Scheduler\TaskHandlerInterface:
         tags: ['app.scheduled_task']
 
     # collection of tagged tasks
@@ -48,15 +48,15 @@ Scheduled tasks to run at scheduled time
 
 ## Tasks
 
-All Tasks should implement TaskInterface
+All Tasks should implement TaskHandlerInterface
 
 Example:
 
 ```php
 
-use App\Scheduler\TaskInterface;
+use App\Scheduler\TaskMessageInterface;
 
-class ExampleTask implements TaskInterface
+class ExampleTaskHandler implements TaskInterface
 {
 
     public function getClassName(): string
@@ -75,7 +75,7 @@ class ExampleTask implements TaskInterface
         return 'Task description ie. what task will do';
     }
 
-    public function run()
+    public function handle(Schedule $schedule)
     {
         // anything witch is needed to run for task
     }

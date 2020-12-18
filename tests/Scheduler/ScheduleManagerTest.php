@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class ScheduleServiceTest
+ * Class ScheduleManagerTest
  * @package App\Tests\Scheduler
  */
 class ScheduleManagerTest extends TestCase
